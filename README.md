@@ -16,15 +16,15 @@ very useful otherwise.
 `M-x package-install hide-mode-line`
 
 ```emacs-lisp
-(require 'hide-mode-line')
+(require 'hide-mode-line)
 ```
 
 Add `hide-mode-line-mode` to hooks where you don't want a mode-line, like the
 completion-list or org todo/agenda-popup windows, or neotree.
 
 ```emacs-lisp
-(add-hook 'completion-list-mode-hook #'hide-modeline-mode)
-(add-hook 'neotree-mode-hook #'hide-modeline-mode)
+(add-hook 'completion-list-mode-hook #'hide-mode-line-mode)
+(add-hook 'neotree-mode-hook #'hide-mode-line-mode)
 ```
 
 Or replace the mode-line in specific windows:
