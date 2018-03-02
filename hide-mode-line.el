@@ -5,8 +5,8 @@
 ;; Author: Henrik Lissner <http://github/hlissner>
 ;; Maintainer: Henrik Lissner <henrik@lissner.net>
 ;; Created: March 01, 2018
-;; Modified: March 01, 2018
-;; Version: 1.0.0
+;; Modified: March 02, 2018
+;; Version: 1.0.1
 ;; Keywords: frames mode-line
 ;; URL: https://github.com/hlissner/emacs-hide-mode-line
 ;; Package-Requires: ((emacs "24.4"))
