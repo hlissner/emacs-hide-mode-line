@@ -1,3 +1,4 @@
+[![MELPA](http://melpa.org/packages/hide-mode-line-badge.svg?style=flat-square)](http://melpa.org/#/hide-mode-line)
 [![MIT](https://img.shields.io/badge/license-MIT-green.svg?style=flat-square)](./LICENSE)
 
 # hide-mode-line
@@ -11,7 +12,7 @@ very useful otherwise.
 
 ## Install
 
-`hide-mode-line` will be available on MELPA soon.
+`hide-mode-line` is available on MELPA.
 
 `M-x package-install hide-mode-line`
 
