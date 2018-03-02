@@ -29,6 +29,7 @@
   "Storage for the old `mode-line-format', so it can be restored when
 `hide-mode-line-mode' is disabled.")
 
+;;;###autoload
 (define-minor-mode hide-mode-line-mode
   "Minor mode to hide the mode-line in the current buffer."
   :init-value nil
