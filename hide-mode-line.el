@@ -7,16 +7,16 @@
 ;; Created: March 01, 2018
 ;; Modified: March 01, 2018
 ;; Version: 1.0.0
-;; Keywords: mode-line
-;; Homepage: https://github.com/hlissner/emacs-hide-mode-line
+;; Keywords: frames mode-line
+;; URL: https://github.com/hlissner/emacs-hide-mode-line
 ;; Package-Requires: ((emacs "24.4"))
 ;;
 ;; This file is not part of GNU Emacs.
 
 ;;; Commentary:
 ;;
-;; Provides `hide-mode-line-mode`. A minor mode that hides (or masks) the
-;; mode-line in your current buffer. It can be used to toggle an alternative
+;; Provides `hide-mode-line-mode`.  A minor mode that hides (or masks) the
+;; mode-line in your current buffer.  It can be used to toggle an alternative
 ;; mode-line, toggle its visibility, or simply disable the mode-line in buffers
 ;; where it isn't very useful otherwise.
 ;;
@@ -29,6 +29,7 @@
   "Storage for the old `mode-line-format', so it can be restored when
 `hide-mode-line-mode' is disabled.")
 
+;;;###autoload
 (define-minor-mode hide-mode-line-mode
   "Minor mode to hide the mode-line in the current buffer."
   :init-value nil
