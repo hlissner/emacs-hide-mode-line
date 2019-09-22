@@ -25,6 +25,9 @@
 (defvar hide-mode-line-format nil
   "The modeline format to use when `hide-mode-line-mode' is active.")
 
+(defvar hide-mode-line-excluded-modes '(fundamental-mode)
+  "List of major modes where `global-hide-mode-line-mode' won't affect.")
+
 (defvar-local hide-mode-line--old-format nil
   "Storage for the old `mode-line-format', so it can be restored when
 `hide-mode-line-mode' is disabled.")
@@ -62,6 +65,22 @@ cycled to fix this."
   (when hide-mode-line-mode
     (hide-mode-line-mode -1)
     (hide-mode-line-mode +1)))
+
+;;;###autoload
+(define-globalized-minor-mode global-hide-mode-line-mode
+  hide-mode-line-mode turn-on-hide-mode-line-mode)
+
+;;;###autoload
+(defun turn-on-hide-mode-line-mode ()
+  "Turn on `hide-mode-line-mode'.
+Unless in `fundamental-mode' or `hide-mode-line-excluded-modes'."
+  (unless (memq major-mode hide-mode-line-excluded-modes)
+    (hide-mode-line-mode +1)))
+
+;;;###autoload
+(defun turn-off-hide-mode-line-mode ()
+  "Turn off `hide-mode-line-mode'."
+  (hide-mode-line-mode -1))
 
 (provide 'hide-mode-line)
 ;;; hide-mode-line.el ends here
