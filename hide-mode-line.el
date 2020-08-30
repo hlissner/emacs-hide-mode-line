@@ -25,6 +25,12 @@
 (defvar hide-mode-line-format nil
   "The modeline format to use when `hide-mode-line-mode' is active.")
 
+(defvar hide-mode-line-face 'mode-line
+  "Remap to this face when `hide-mode-line-mode' is active.")
+
+(defvar-local hide-mode-line--cookies nil
+  "Storage for cookies when remaping mode-line and mode-line-inactive faces.")
+
 (defvar hide-mode-line-excluded-modes '(fundamental-mode)
   "List of major modes where `global-hide-mode-line-mode' won't affect.")
 
@@ -42,12 +48,18 @@
       (unless hide-mode-line--old-format
         (add-hook 'after-change-major-mode-hook #'hide-mode-line-reset nil t)
         (setq-local hide-mode-line--old-format mode-line-format)
+        (setq-local hide-mode-line--cookies
+                    (mapcar (lambda (face)
+                              (face-remap-add-relative face
+                                                       hide-mode-line-face))
+                              '(mode-line mode-line-inactive)))
         (setq mode-line-format hide-mode-line-format))
     ;; else
     ;; check old-format to prevent setting mode-line-format to nil
     (when hide-mode-line--old-format
       (remove-hook 'after-change-major-mode-hook #'hide-mode-line-reset t)
       (setq mode-line-format hide-mode-line--old-format)
+      (mapc 'face-remap-remove-relative hide-mode-line--cookies)
       (setq-local hide-mode-line--old-format nil)))
   (force-mode-line-update))
 
