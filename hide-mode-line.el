@@ -38,6 +38,24 @@
   "Storage for the old `mode-line-format', so it can be restored when
 `hide-mode-line-mode' is disabled.")
 
+(defun hide-mode-line--mask-mode-line ()
+  "Mask mode-line.
+Use `hide-mode-line-format' and `hide-mode-line-face'."
+  (setq-local hide-mode-line--old-format mode-line-format)
+  (setq-local hide-mode-line--cookies
+              (list (face-remap-add-relative 'mode-line hide-mode-line-face)
+                    (face-remap-add-relative 'mode-line-inactive hide-mode-line-face)))
+  (setq mode-line-format hide-mode-line-format)
+  (force-mode-line-update))
+
+(defun hide-mode-line--unmask-mode-line ()
+  "Unmask mode-line.  Revert to original mode-line."
+  (setq mode-line-format hide-mode-line--old-format)
+  (mapc 'face-remap-remove-relative hide-mode-line--cookies)
+  (setq-local hide-mode-line--old-format nil)
+  (force-mode-line-update)
+  (unless hide-mode-line-format (redraw-display)))
+
 ;;;###autoload
 (define-minor-mode hide-mode-line-mode
   "Minor mode to hide the mode-line in the current buffer."
@@ -46,22 +64,15 @@
   (if hide-mode-line-mode
       ;; Do not overwrite original mode line
       (unless hide-mode-line--old-format
-        (add-hook 'after-change-major-mode-hook #'hide-mode-line-reset nil t)
-        (setq-local hide-mode-line--old-format mode-line-format)
-        (setq-local hide-mode-line--cookies
-                    (mapcar (lambda (face)
-                              (face-remap-add-relative face
-                                                       hide-mode-line-face))
-                              '(mode-line mode-line-inactive)))
-        (setq mode-line-format hide-mode-line-format))
+        (add-hook 'after-change-major-mode-hook
+                  #'hide-mode-line-reset nil t)
+        (hide-mode-line--mask-mode-line))
     ;; else
     ;; check old-format to prevent setting mode-line-format to nil
     (when hide-mode-line--old-format
-      (remove-hook 'after-change-major-mode-hook #'hide-mode-line-reset t)
-      (setq mode-line-format hide-mode-line--old-format)
-      (mapc 'face-remap-remove-relative hide-mode-line--cookies)
-      (setq-local hide-mode-line--old-format nil)))
-  (force-mode-line-update))
+      (remove-hook 'after-change-major-mode-hook
+                   #'hide-mode-line-reset t)
+      (hide-mode-line--unmask-mode-line))))
 
 ;; Ensure major-mode or theme changes don't overwrite these variables
 (put 'hide-mode-line--old-format 'permanent-local t)
