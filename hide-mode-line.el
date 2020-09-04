@@ -22,17 +22,31 @@
 ;;
 ;;; Code:
 
-(defvar hide-mode-line-format nil
-  "The modeline format to use when `hide-mode-line-mode' is active.")
+(defcustom hide-mode-line-format ""
+  "The modeline format to use when `hide-mode-line-mode' is active."
+  :type 'string
+  :group 'hide-mode-line)
 
-(defvar hide-mode-line-face 'mode-line
-  "Remap to this face when `hide-mode-line-mode' is active.")
+(defun hide-mode-line--guess-face ()
+  "Set default face to hide mode-line."
+  (let ((background (face-background 'default))
+        (foreground (face-foreground 'default)))
+     (list :box nil :foreground foreground
+           :background background :height 0.5)))
+
+(defcustom hide-mode-line-face
+  (hide-mode-line--guess-face)
+  "Remap to this face when `hide-mode-line-mode' is active."
+  :type 'list
+  :group 'hide-mode-line)
 
 (defvar-local hide-mode-line--cookies nil
   "Storage for cookies when remaping mode-line and mode-line-inactive faces.")
 
-(defvar hide-mode-line-excluded-modes '(fundamental-mode)
-  "List of major modes where `global-hide-mode-line-mode' won't affect.")
+(defcustom hide-mode-line-excluded-modes '(fundamental-mode)
+  "List of major modes where `global-hide-mode-line-mode' won't affect."
+  :type 'list
+  :group 'hide-mode-line)
 
 (defvar-local hide-mode-line--old-format nil
   "Storage for the old `mode-line-format', so it can be restored when
