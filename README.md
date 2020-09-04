@@ -37,6 +37,24 @@ Or replace the mode-line in specific windows:
 (setq-local hide-mode-line-format '("%b"))
 (hide-mode-line-mode +1)
 ```
+Also can change the face of the `mode-line` setting `hide-mode-line-face` with a
+face.
+
+```emacs-lsip
+(setq hide-mode-line-face 'mode-line-minor-mode-face)
+```
+
+Or with the list of attributes ([see Manual][attributes-doc]) that are passed to [`face-remap-add-relative`][remap-doc]
+
+```emacs-lisp
+(setq hide-mode-line-face (list :box nil :background "yellow" :height 0.25))
+```
+Or
+```emacs-lisp
+(setq hide-mode-line-face '(:box nil :background "blue" :height 0.1))
+```
 
 
 [doom]: https://github.com/hlissner/doom-emacs
+[attributes-doc]: https://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html
+[remap-doc]: https://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Remapping.html
