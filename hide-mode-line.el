@@ -39,10 +39,11 @@
   :global nil
   (if hide-mode-line-mode
       (progn
-        (add-hook 'after-change-major-mode-hook #'hide-mode-line-reset nil t)
-        (setq hide-mode-line--old-format mode-line-format
-              mode-line-format hide-mode-line-format))
-    (remove-hook 'after-change-major-mode-hook #'hide-mode-line-reset t)
+        (add-hook 'after-change-major-mode-hook #'hide-mode-line-mode nil t)
+        (unless hide-mode-line--old-format
+          (setq hide-mode-line--old-format mode-line-format))
+        (setq mode-line-format hide-mode-line-format))
+    (remove-hook 'after-change-major-mode-hook #'hide-mode-line-mode t)
     (setq mode-line-format hide-mode-line--old-format
           hide-mode-line--old-format nil))
   (when (called-interactively-p 'any)
@@ -51,21 +52,6 @@
 ;; Ensure major-mode or theme changes don't overwrite these variables
 (put 'hide-mode-line--old-format 'permanent-local t)
 (put 'hide-mode-line-mode 'permanent-local-hook t)
-(put 'hide-mode-line-reset 'permanent-local-hook t)
-
-(defun hide-mode-line-reset ()
-  "Reset `hide-mode-line-mode' in the current buffer, if necessary.
-
-Sometimes, a major mode is activated after `hide-mode-line-mode' is activated,
-thus disabling it (because changing major modes invokes
-`kill-all-local-variables' and specifically kills `mode-line-format's local
-value, whether or not it's permanent-local.
-
-Attach this to `after-change-major-mode-hook' and `hide-mode-line-mode' will be
-cycled to fix this."
-  (when hide-mode-line-mode
-    (hide-mode-line-mode -1)
-    (hide-mode-line-mode +1)))
 
 ;;;###autoload
 (define-globalized-minor-mode global-hide-mode-line-mode
