@@ -45,7 +45,8 @@
     (remove-hook 'after-change-major-mode-hook #'hide-mode-line-reset t)
     (setq mode-line-format hide-mode-line--old-format
           hide-mode-line--old-format nil))
-  (force-mode-line-update))
+  (when (called-interactively-p 'any)
+    (redraw-display)))
 
 ;; Ensure major-mode or theme changes don't overwrite these variables
 (put 'hide-mode-line--old-format 'permanent-local t)
@@ -68,7 +69,8 @@ cycled to fix this."
 
 ;;;###autoload
 (define-globalized-minor-mode global-hide-mode-line-mode
-  hide-mode-line-mode turn-on-hide-mode-line-mode)
+  hide-mode-line-mode turn-on-hide-mode-line-mode
+  (redraw-display))
 
 ;;;###autoload
 (defun turn-on-hide-mode-line-mode ()
