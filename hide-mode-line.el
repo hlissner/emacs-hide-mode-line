@@ -1,12 +1,12 @@
 ;;; hide-mode-line.el --- minor mode that hides/masks your modeline -*- lexical-binding: t; -*-
 ;;
-;; Copyright (C) 2018 Henrik Lissner
+;; Copyright (C) 2018-2021 Henrik Lissner
 ;;
 ;; Author: Henrik Lissner <http://github/hlissner>
-;; Maintainer: Henrik Lissner <henrik@lissner.net>
+;; Maintainer: Henrik Lissner <git@henrik.io>
 ;; Created: March 01, 2018
-;; Modified: September 21, 2019
-;; Version: 1.0.2
+;; Modified: November 12, 2021
+;; Version: 1.0.3
 ;; Keywords: frames mode-line
 ;; URL: https://github.com/hlissner/emacs-hide-mode-line
 ;; Package-Requires: ((emacs "24.4"))
