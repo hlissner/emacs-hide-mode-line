@@ -56,6 +56,11 @@
 ;;;###autoload
 (define-globalized-minor-mode global-hide-mode-line-mode
   hide-mode-line-mode turn-on-hide-mode-line-mode
+  (if global-hide-mode-line-mode
+      (setq-default hide-mode-line--old-format (default-value 'mode-line-format)
+                    mode-line-format nil)
+    (setq-default mode-line-format (default-value 'hide-mode-line--old-format)
+                  hide-mode-line--old-format nil))
   (redraw-display))
 
 ;;;###autoload
